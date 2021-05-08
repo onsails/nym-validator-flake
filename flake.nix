@@ -37,6 +37,10 @@
           preBuild = ''
             mkdir -p $out/lib
             cp vendor/github.com/CosmWasm/wasmvm/api/libwasmvm.so $out/lib
+
+            # speakeasy hardcodes /bin/stty https://github.com/bgentry/speakeasy/issues/22
+            substituteInPlace vendor/github.com/bgentry/speakeasy/speakeasy_unix.go \
+              --replace "/bin/stty" "${coreutils}/bin/stty"
           '';
 
           preFixup = ''
