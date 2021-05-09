@@ -23,7 +23,7 @@ rec {
 
   buildFlags = [ "-tags netgo" "-tags ledger" ];
 
-  preBuild = ''
+  postConfigure = ''
     mkdir -p $out/lib
     cp vendor/github.com/CosmWasm/wasmvm/api/libwasmvm.so $out/lib
 

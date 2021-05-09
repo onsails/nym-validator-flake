@@ -1,0 +1,12 @@
+image: nixos/20.09
+packages:
+  - nixos.nixUnstable
+sources:
+  - https://github.com/onsails/nym-validator-flake
+tasks:
+  - prepare: |
+      mkdir -p ~/.config/nix
+      echo 'experimental-features = nix-command flakes' >~/.config/nix/nix.conf
+  - build: |
+      cd nym-validator-flake
+      nix build .#packages.x86_64-linux.nymd --print-build-logs --keep-failed
