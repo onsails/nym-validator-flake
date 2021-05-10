@@ -159,8 +159,10 @@ in
             APP_FILE=${cfg.dataDir}/.nymd/config/app.toml
 
             echo "Setting config values"
+
+
             ${pkgs.dasel}/bin/dasel put string -f $CONFIG_FILE '.p2p.persistent_peers' '${chainOpts.persistentPeers}'
-            ${pkgs.dasel}/bin/dasel put string -f $CONFIG_FILE '.p2p.external-ip' '${cfg.publicAddr.ip}:${toString cfg.publicAddr.port}'
+            ${pkgs.dasel}/bin/dasel put string -f $CONFIG_FILE '.p2p.external_address' '${cfg.publicAddr.ip}:${toString cfg.publicAddr.port}'
 
             ${pkgs.dasel}/bin/dasel put string -f $CONFIG_FILE '.rpc.cors_allowed_origins' '${chainOpts.corsAllowedOrigins}'
 
