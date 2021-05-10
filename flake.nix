@@ -12,5 +12,6 @@
     in
     {
       packages.nymd = pkgs.callPackage ./nix/nymd.nix { };
+      nixosModules.nymd = ./nix/nixos-module.nix;
     });
 }
