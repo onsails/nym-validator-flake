@@ -18,6 +18,7 @@ let
         corsAllowedOrigins = ''["*"]'';
         createEmptyBlocks = "false";
         prometheusEnable = "${boolToString cfg.prometheus.enable}";
+        rpcLaddr = "tcp://${cfg.rpc.listen.host}:${toString cfg.rpc.listen.port}";
 
         # app.toml
         minimumGasPrices = "0.025uhal";
@@ -44,6 +45,20 @@ in
 
       port = mkOption {
         type = types.int;
+      };
+    };
+
+    rpc = {
+      listen = {
+        host = mkOption {
+          type = types.str;
+          default = "127.0.0.1";
+        };
+
+        port = mkOption {
+          type = types.int;
+          default = 26657;
+        };
       };
     };
 
@@ -165,6 +180,7 @@ in
             ${pkgs.dasel}/bin/dasel put string -f $CONFIG_FILE '.p2p.external_address' '${cfg.publicAddr.ip}:${toString cfg.publicAddr.port}'
 
             ${pkgs.dasel}/bin/dasel put string -f $CONFIG_FILE '.rpc.cors_allowed_origins' '${chainOpts.corsAllowedOrigins}'
+            ${pkgs.dasel}/bin/dasel put string -f $CONFIG_FILE '.rpc.laddr' '${chainOpts.rpcLaddr}'
 
             ${pkgs.dasel}/bin/dasel put bool -f $CONFIG_FILE '.consensus.create_empty_blocks' '${chainOpts.createEmptyBlocks}'
 
